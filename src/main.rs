@@ -3,16 +3,37 @@ use std::env;
 fn main() {
 
     //default values for resolution, filename
-    //let mut width:u32 = 600;
-    //let mut height:u32 = 400;
+    let mut print_dog = false;
+    let mut width:u32 = 600;
+    let mut height:u32 = 400;
     //let mut filename ="output.png";
 
     //get command-line arguments
     //https://doc.rust-lang.org/book/ch12-01-accepting-command-line-arguments.html
     let args: Vec<String> = env::args().collect();
+    let num_args = args.len();
+
+    //iterate over them
+    for (i, arg) in args.iter().enumerate() {
+        if (arg == "--width" || arg == "-w") && i+1 < num_args {
+            width = args[i+1].parse::<u32>().unwrap();
+        }
+
+        if (arg == "--height" || arg == "-h") && i+1 < num_args {
+            height = args[i+1].parse::<u32>().unwrap();
+        }
+
+        if arg == "--dog" {
+            print_dog = true;
+        }
+
+    }
+
+    println!("width: {}", width);
+    println!("height: {}", height);
 
     //print animal emoji
-    if args.contains(&"--dog".to_string()) {
+    if print_dog {
         println!("woof, woof 🐶");
     } else {
         println!("meow 🐱");
