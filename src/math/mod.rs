@@ -1,5 +1,5 @@
 mod vector3;
-//mod ray;
+mod ray;
 
 pub use self::vector3::*;
-//pub use self::ray::*;
+pub use self::ray::*;
