@@ -1,3 +1,7 @@
+use std::path::Path;
+use std::fs::File;
+use std::io::BufWriter;
+
 pub struct Scene {
     resolution_x : u32,
     resolution_y : u32,
@@ -35,10 +39,32 @@ impl Scene {
     }
 
     pub fn render(&self) {
-        render();
+        render(self.filename.clone(), self.resolution_x,self.resolution_y);
     }
 }
 
-fn render(){
-    println!("render");
+fn render(filename: String, width: u32, height: u32){
+    let mut num_pixels = (width * height * 4) as usize;
+    let mut image = Vec::with_capacity(num_pixels);
+    let mut counter:usize = 0;
+
+    //fill vector with white pixels
+    while counter < num_pixels {
+        image.push(255u8);
+        counter += 1
+    }
+
+    write_png(filename, width, height, &image);
+}
+
+fn write_png(filename: String, width: u32, height: u32, image: &[u8]) {
+    let path = Path::new(&filename);
+    let file = File::create(path).unwrap();
+    let ref mut buf_writer = BufWriter::new(file);
+    let mut encoder = png::Encoder::new(buf_writer, width, height);
+    encoder.set_color(png::ColorType::RGBA);
+    encoder.set_depth(png::BitDepth::Eight);
+    let mut writer = encoder.write_header().unwrap();
+    writer.write_image_data(image).unwrap();
+
 }
