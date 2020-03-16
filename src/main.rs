@@ -35,13 +35,6 @@ fn main() {
 
     }
 
-    let a = Vector3::new(1.0, 2.0, 3.0);
-    let b = Vector3::new(-7.0, 8.0, 9.0);
-    let c = Vector3::new(1 as f64,1 as f64,1 as f64);
-    let d = c.normalize();
-    println!("{}",a+b);
-    println!("{}",d);
-
     //print animal emoji
     if print_dog {
         println!("woof, woof 🐶");
