@@ -1,8 +1,10 @@
 use std::env;
 
 mod math;
+mod scene;
 
 use math::Vector3;
+use scene::Scene;
 
 fn main() {
 
@@ -34,6 +36,10 @@ fn main() {
         }
 
     }
+
+    let mut scene = Scene::new();
+    scene.set_resolution(width, height);
+    scene.render();
 
     //print animal emoji
     if print_dog {
