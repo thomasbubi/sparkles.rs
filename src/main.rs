@@ -12,7 +12,7 @@ fn main() {
     let mut print_dog = false;
     let mut width:u32 = 600;
     let mut height:u32 = 400;
-    //let mut filename ="output.png";
+    let mut filename ="output.png";
     //let mut use_alpha_background = false;
 
     //get command-line arguments
@@ -39,6 +39,7 @@ fn main() {
 
     let mut scene = Scene::new();
     scene.set_resolution(width, height);
+    scene.set_output_filename(filename);
     scene.render();
 
     //print animal emoji

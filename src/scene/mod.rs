@@ -21,13 +21,17 @@ impl Scene {
             t_min: 0.05,
             max_recursion_depth: 3,
             spp_glossy: 10,
-            filename: "output.png".to_string()
+            filename: "sparkles_rendering.png".to_string()
         }
     }
 
     pub fn set_resolution(&mut self, width: u32, height: u32) {
         self.resolution_x = width;
         self.resolution_y = height;
+    }
+
+    pub fn set_output_filename(&mut self, filename: &str) {
+        self.filename = filename.to_string();
     }
 
     pub fn render(&self) {
