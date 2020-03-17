@@ -6,7 +6,7 @@ use std::ops::Mul;
 use std::ops::MulAssign;
 use std::fmt::{Display, Formatter, Error, Result};
 
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 pub struct Vector3 {
     pub x: f64,
     pub y: f64,

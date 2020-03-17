@@ -1,6 +1,8 @@
 use std::path::Path;
 use std::fs::File;
 use std::io::BufWriter;
+use crate::camera::PerspectiveCamera;
+use crate::math::Vector3;
 
 pub struct Scene {
     resolution_x : u32,
@@ -11,11 +13,13 @@ pub struct Scene {
     t_min: f64,
     max_recursion_depth: u32,
     spp_glossy: u32,
-    filename: String
+    filename: String,
+    camera: PerspectiveCamera
 }
 
 impl Scene {
-    pub fn new() -> Scene {
+    pub fn new(mut camera: PerspectiveCamera) -> Scene {
+        let null_vec3 = Vector3::new(0.0,0.0, 0.0);
         Scene {
             resolution_x: 600,
             resolution_y: 400,
@@ -25,13 +29,15 @@ impl Scene {
             t_min: 0.05,
             max_recursion_depth: 3,
             spp_glossy: 10,
-            filename: "sparkles_rendering.png".to_string()
+            filename: "sparkles_rendering.png".to_string(),
+            camera
         }
     }
 
     pub fn set_resolution(&mut self, width: u32, height: u32) {
         self.resolution_x = width;
         self.resolution_y = height;
+        self.camera.set_resolution(width, height);
     }
 
     pub fn set_output_filename(&mut self, filename: &str) {
