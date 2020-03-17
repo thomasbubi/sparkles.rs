@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::BufWriter;
 use crate::camera::PerspectiveCamera;
 use crate::math::Vector3;
+use crate::intersectables::Intersectable;
 
 pub struct Scene {
     resolution_x : u32,
@@ -14,7 +15,8 @@ pub struct Scene {
     max_recursion_depth: u32,
     spp_glossy: u32,
     filename: String,
-    camera: PerspectiveCamera
+    camera: PerspectiveCamera,
+    //objects: Vec<dyn Intersectable>
 }
 
 impl Scene {
@@ -30,8 +32,13 @@ impl Scene {
             max_recursion_depth: 3,
             spp_glossy: 10,
             filename: "sparkles_rendering.png".to_string(),
-            camera
+            camera,
+            //objects: Vec::new()
         }
+    }
+
+    pub fn add_object(&mut self, obj: impl Intersectable){
+        //self.objects.push(obj);
     }
 
     pub fn set_resolution(&mut self, width: u32, height: u32) {

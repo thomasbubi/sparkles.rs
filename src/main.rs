@@ -3,10 +3,12 @@ use std::env;
 mod math;
 mod scene;
 mod camera;
+mod intersectables;
 
 use math::Vector3;
 use scene::Scene;
 use camera::PerspectiveCamera;
+use intersectables::Plane;
 
 fn main() {
 
@@ -39,6 +41,11 @@ fn main() {
 
     }
 
+    let plane = Plane::new(
+        Vector3::new(0.0,0.0,0.0),
+        Vector3::new(0.0, 0.0,1.0)
+    );
+
     let mut scene = Scene::new(
         PerspectiveCamera::new(
             Vector3::new(0.0,0.5,0.75),
@@ -46,6 +53,7 @@ fn main() {
             35.0
         )
     );
+    scene.add_object(plane);
     scene.set_resolution(width, height);
     scene.set_output_filename(filename);
     scene.render();
