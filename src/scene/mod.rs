@@ -4,6 +4,7 @@ use std::io::BufWriter;
 use crate::camera::PerspectiveCamera;
 use crate::math::Vector3;
 use crate::intersectables::Intersectable;
+use std::borrow::Borrow;
 
 pub struct Scene {
     resolution_x : u32,
@@ -16,7 +17,7 @@ pub struct Scene {
     spp_glossy: u32,
     filename: String,
     camera: PerspectiveCamera,
-    //objects: Vec<dyn Intersectable>
+    objects: Vec<Box<Intersectable>>
 }
 
 impl Scene {
@@ -33,12 +34,13 @@ impl Scene {
             spp_glossy: 10,
             filename: "sparkles_rendering.png".to_string(),
             camera,
-            //objects: Vec::new()
+            objects: Vec::new()
         }
     }
 
-    pub fn add_object(&mut self, obj: impl Intersectable){
-        //self.objects.push(obj);
+    //using stativ lifetime here, since the objects are needed as long the program is running
+    pub fn add_object(&mut self, obj: impl Intersectable + 'static){
+        self.objects.push(Box::new(obj) );
     }
 
     pub fn set_resolution(&mut self, width: u32, height: u32) {
@@ -52,11 +54,11 @@ impl Scene {
     }
 
     pub fn render(&self) {
-        render(self.filename.clone(), self.resolution_x,self.resolution_y);
+        render(self.camera.borrow(),self.filename.clone(), self.resolution_x,self.resolution_y);
     }
 }
 
-fn render(filename: String, width_u32: u32, height_u32: u32){
+fn render(camera: &PerspectiveCamera, filename: String, width_u32: u32, height_u32: u32){
     let width = width_u32 as usize;
     let height = height_u32 as usize;
     let mut num_pixels = width * height * 4;
@@ -72,6 +74,7 @@ fn render(filename: String, width_u32: u32, height_u32: u32){
     //iterate over every pixel
     for j in 0..height {
         for i in 0..width {
+            let ray = camera.create_camera_ray(i,j);
             fill_pixel(width,i,j,&mut image, 255,127,127,255);
         }
     }
