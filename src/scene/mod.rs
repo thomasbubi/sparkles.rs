@@ -43,8 +43,10 @@ impl Scene {
     }
 }
 
-fn render(filename: String, width: u32, height: u32){
-    let mut num_pixels = (width * height * 4) as usize;
+fn render(filename: String, width_u32: u32, height_u32: u32){
+    let width = width_u32 as usize;
+    let height = height_u32 as usize;
+    let mut num_pixels = width * height * 4;
     let mut image = Vec::with_capacity(num_pixels);
     let mut counter:usize = 0;
 
@@ -54,10 +56,26 @@ fn render(filename: String, width: u32, height: u32){
         counter += 1
     }
 
-    write_png(filename, width, height, &image);
+    //iterate over every pixel
+    for j in 0..height {
+        for i in 0..width {
+            fill_pixel(width,i,j,&mut image, 255,127,127,255);
+        }
+    }
+
+    write_png(filename, width_u32, height_u32, &image);
+}
+
+fn fill_pixel(width: usize, i: usize, j: usize, image: &mut Vec<u8>, r: u8, g: u8, b: u8, a: u8){
+    let idx = (j * width + i) * 4;
+    image[idx] = r;
+    image[idx+1] = g;
+    image[idx+2] = b;
+    image[idx+3] = a;
 }
 
 fn write_png(filename: String, width: u32, height: u32, image: &[u8]) {
+    //https://docs.rs/png/0.16.1/png/#using-the-encoder
     let path = Path::new(&filename);
     let file = File::create(path).unwrap();
     let ref mut buf_writer = BufWriter::new(file);
