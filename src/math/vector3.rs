@@ -57,7 +57,7 @@ impl Add for Vector3 {
     }
 }
 
-impl  AddAssign for Vector3 {
+impl AddAssign for Vector3 {
     fn add_assign(&mut self, rhs: Self) {
         *self = Self {
             x: self.x + rhs.x,

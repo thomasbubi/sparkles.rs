@@ -4,11 +4,13 @@ mod math;
 mod scene;
 mod camera;
 mod intersectables;
+mod materials;
 
 use math::Vector3;
 use scene::Scene;
 use camera::PerspectiveCamera;
 use intersectables::Plane;
+use materials::Color;
 
 fn main() {
 
@@ -56,7 +58,10 @@ fn main() {
     scene.add_object(plane);
     scene.set_resolution(width, height);
     scene.set_output_filename(filename);
-    scene.render();
+    //scene.render();
+
+    let c = Color::new(1.0,0.0,0.0,0.0);
+    println!("Color: ({},{},{},{})", c.r,c.g,c.b,c.a);
 
     //print animal emoji
     if print_dog {
