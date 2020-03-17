@@ -14,7 +14,7 @@ impl Plane {
 }
 
 impl Intersectable for Plane {
-    fn intersect(&self, ray: Ray) -> f64 {
+    fn intersect(&self, ray: &Ray) -> f64 {
         let dot_n_pos = Vector3::dot(self.normal.borrow(), self.position.borrow());
         let dot_n_ori = Vector3::dot(self.normal.borrow(), ray.origin.borrow());
         let dot_n_dir = Vector3::dot(self.normal.borrow(), ray.direction.borrow());
