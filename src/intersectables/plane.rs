@@ -1,15 +1,17 @@
 use crate::math::{Vector3, Ray};
 use crate::intersectables::Intersectable;
 use std::borrow::Borrow;
+use crate::materials::Material;
 
 pub struct Plane {
     position: Vector3,
-    normal: Vector3
+    normal: Vector3,
+    material: Box<Material>
 }
 
 impl Plane {
-    pub fn new(position: Vector3, normal: Vector3) -> Plane{
-        Plane{ position, normal }
+    pub fn new(position: Vector3, normal: Vector3, material: impl Material + 'static) -> Plane{
+        Plane{ position, normal, material: Box::new(material)}
     }
 }
 
@@ -23,5 +25,9 @@ impl Intersectable for Plane {
 
     fn get_struct_name(&self) -> String {
         "Plane".to_string()
+    }
+
+    fn get_material(&self) -> &Box<Material> {
+        &self.material
     }
 }
