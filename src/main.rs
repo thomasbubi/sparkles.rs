@@ -10,6 +10,7 @@ use math::Vector3;
 use scene::Scene;
 use camera::PerspectiveCamera;
 use intersectables::Plane;
+use intersectables::Sphere;
 use materials::Color;
 use crate::materials::ShadelessMaterial;
 
@@ -50,6 +51,12 @@ fn main() {
         ShadelessMaterial::new( Color::new(0.2,0.2,0.2,1.0) )
     );
 
+    let sphere = Sphere::new(
+        Vector3::new(-0.7,-2.0,0.5),
+        0.5,
+        ShadelessMaterial::new( Color::new(1.0,0.2,0.2,1.0) )
+    );
+
     let mut scene = Scene::new(
         PerspectiveCamera::new(
             Vector3::new(0.0,0.5,0.75),
@@ -61,6 +68,7 @@ fn main() {
     if use_alpha_background { scene.use_alpha(); }
 
     scene.add_object(plane);
+    scene.add_object(sphere);
     scene.set_resolution(width, height);
     scene.set_output_filename(filename);
     scene.render();

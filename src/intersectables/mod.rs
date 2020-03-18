@@ -1,6 +1,8 @@
 mod plane;
+mod sphere;
 
 pub use self::plane::*;
+pub use self::sphere::*;
 use crate::math::Ray;
 use crate::materials::Material;
 
