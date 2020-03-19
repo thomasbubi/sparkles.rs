@@ -1,4 +1,4 @@
-use crate::materials::{Color, Material};
+use crate::materials::{Color, Material, ShaderInput};
 use std::borrow::Borrow;
 
 pub struct ShadelessMaterial {
@@ -12,7 +12,7 @@ impl ShadelessMaterial {
 }
 
 impl Material for ShadelessMaterial {
-    fn shade(&self) -> Color {
+    fn shade(&self, input: ShaderInput) -> Color {
         self.color.clone()
     }
 }

@@ -5,7 +5,7 @@ use crate::camera::PerspectiveCamera;
 use crate::math::{Vector3, Ray};
 use crate::intersectables::{Intersectable, Background};
 use std::borrow::Borrow;
-use crate::materials::Color;
+use crate::materials::{Color, ShaderInput};
 use crate::materials::ShadelessMaterial;
 
 pub struct Scene {
@@ -60,11 +60,11 @@ impl Scene {
     }
 
     pub fn render(&self) {
-        render(self.objects.borrow(),self.camera.borrow(), self.use_alpha_transparency, self.filename.clone(), self.resolution_x,self.resolution_y);
+        render(&self, self.objects.borrow(), self.camera.borrow(), self.use_alpha_transparency, self.filename.clone(), self.resolution_x,self.resolution_y);
     }
 }
 
-fn render(objects: &Vec<Box<Intersectable>>, camera: &PerspectiveCamera, use_alpha: bool, filename: String, width_u32: u32, height_u32: u32){
+fn render(scene: &Scene, objects: &Vec<Box<Intersectable>>, camera: &PerspectiveCamera, use_alpha: bool, filename: String, width_u32: u32, height_u32: u32){
     let width = width_u32 as usize;
     let height = height_u32 as usize;
     let mut num_pixels = width * height * 4;
@@ -106,7 +106,18 @@ fn render(objects: &Vec<Box<Intersectable>>, camera: &PerspectiveCamera, use_alp
                 }
             }
 
-            let c:Color = nearest_object.get_material().shade();
+            let intersection_point = view_ray.at(t);
+
+            let input = ShaderInput {
+                scene,
+                ray: &view_ray,
+                intersection_point: &intersection_point,
+                normal: &intersection_point,//todo add fn get_normal_at in trait Intersectable,
+                current_recursion_depth: 0,
+                max_recursion_depth: 1
+            };
+
+            let c:Color = nearest_object.get_material().shade( input );
 
             fill_pixel(width, i, j, &mut image,
                        (c.r * 255.0) as u8,(c.g * 255.0) as u8,
