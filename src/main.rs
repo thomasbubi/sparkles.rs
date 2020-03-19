@@ -5,6 +5,7 @@ mod scene;
 mod camera;
 mod intersectables;
 mod materials;
+mod textures;
 
 use math::Vector3;
 use scene::Scene;
@@ -14,6 +15,7 @@ use intersectables::Sphere;
 use materials::Color;
 use materials::ShadelessMaterial;
 use materials::NormalMaterial;
+use materials::DiffuseMaterial;
 
 fn main() {
 
@@ -49,7 +51,7 @@ fn main() {
     let plane = Plane::new(
         Vector3::new(0.0,0.0,0.0),
         Vector3::new(0.0, 0.0,1.0),
-        ShadelessMaterial::new( Color::new(0.2,0.2,0.2,1.0) )
+        DiffuseMaterial::new(Color::new(1.0,0.0,0.0,1.0))
     );
 
     let sphere = Sphere::new(

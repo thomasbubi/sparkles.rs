@@ -1,3 +1,5 @@
+use crate::materials::Color;
+
 pub struct UV {
     pub u: f64,
     pub v: f64
@@ -11,4 +13,20 @@ impl UV {
 
 pub trait Texture {
     fn get_value_at(&self, uv: UV) -> Color;
+}
+
+pub struct SingleColorTexture {
+    color: Color
+}
+
+impl SingleColorTexture {
+    pub fn new(color: Color) -> SingleColorTexture {
+        SingleColorTexture{color}
+    }
+}
+
+impl Texture for SingleColorTexture {
+    fn get_value_at(&self, uv: UV) -> Color {
+        self.color.clone()
+    }
 }
