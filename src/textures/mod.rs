@@ -8,3 +8,7 @@ impl UV {
         UV{u,v}
     }
 }
+
+pub trait Texture {
+    fn get_value_at(&self, uv: UV) -> Color;
+}
