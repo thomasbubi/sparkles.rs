@@ -107,12 +107,13 @@ fn render(scene: &Scene, objects: &Vec<Box<Intersectable>>, camera: &Perspective
             }
 
             let intersection_point = view_ray.at(t);
+            let normal = nearest_object.get_normal_at(intersection_point.clone());
 
             let input = ShaderInput {
                 scene,
                 ray: &view_ray,
                 intersection_point: &intersection_point,
-                normal: &intersection_point,//todo add fn get_normal_at in trait Intersectable,
+                normal: &normal,//todo add fn get_normal_at in trait Intersectable,
                 current_recursion_depth: 0,
                 max_recursion_depth: 1
             };

@@ -12,7 +12,8 @@ use camera::PerspectiveCamera;
 use intersectables::Plane;
 use intersectables::Sphere;
 use materials::Color;
-use crate::materials::ShadelessMaterial;
+use materials::ShadelessMaterial;
+use materials::NormalMaterial;
 
 fn main() {
 
@@ -54,7 +55,7 @@ fn main() {
     let sphere = Sphere::new(
         Vector3::new(-0.7,-2.0,0.5),
         0.5,
-        ShadelessMaterial::new( Color::new(1.0,0.2,0.2,1.0) )
+        NormalMaterial{}
     );
 
     let mut scene = Scene::new(

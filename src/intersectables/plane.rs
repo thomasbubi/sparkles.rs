@@ -30,4 +30,8 @@ impl Intersectable for Plane {
     fn get_material(&self) -> &Box<Material> {
         &self.material
     }
+
+    fn get_normal_at(&self, intersection_point: Vector3) -> Vector3 {
+        self.normal.clone()
+    }
 }

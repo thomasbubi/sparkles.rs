@@ -1,7 +1,9 @@
 mod color;
 mod shadelessmaterial;
+mod normalmaterial;
 
 pub use self::shadelessmaterial::*;
+pub use self::normalmaterial::*;
 pub use self::color::*;
 use crate::scene::Scene;
 use crate::math::{Ray, Vector3};

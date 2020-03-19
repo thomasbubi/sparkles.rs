@@ -41,4 +41,8 @@ impl Intersectable for Sphere {
     fn get_material(&self) -> &Box<Material> {
         &self.material
     }
+
+    fn get_normal_at(&self, intersection_point: Vector3) -> Vector3 {
+        intersection_point - self.position.clone()
+    }
 }
