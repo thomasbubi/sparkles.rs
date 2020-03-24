@@ -1,4 +1,7 @@
+mod checkerboardtexture;
+
 use crate::materials::Color;
+pub use self::checkerboardtexture::*;
 
 pub struct UV {
     pub u: f64,

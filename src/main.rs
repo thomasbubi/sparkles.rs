@@ -16,6 +16,7 @@ use materials::Color;
 use materials::ShadelessMaterial;
 use materials::NormalMaterial;
 use materials::DiffuseMaterial;
+use crate::textures::CheckerboardTexture;
 
 fn main() {
 
@@ -48,10 +49,17 @@ fn main() {
 
     }
 
+    let mut plane_mat: DiffuseMaterial = DiffuseMaterial::new(Color::new(1.0,0.0,0.0,1.0));
+    plane_mat.set_texture(CheckerboardTexture::new(
+        1.0,
+        Color::new(1.0,1.0,1.0,1.0),
+        Color::new(0.0,0.0,0.0,1.0)
+    ));
+
     let plane = Plane::new(
         Vector3::new(0.0,0.0,0.0),
         Vector3::new(0.0, 0.0,1.0),
-        DiffuseMaterial::new(Color::new(1.0,0.0,0.0,1.0))
+        plane_mat
     );
 
     let sphere = Sphere::new(
